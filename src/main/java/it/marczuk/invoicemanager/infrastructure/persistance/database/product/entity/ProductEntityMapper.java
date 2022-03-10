@@ -2,9 +2,26 @@ package it.marczuk.invoicemanager.infrastructure.persistance.database.product.en
 
 import it.marczuk.invoicemanager.domain.product.model.Product;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ProductEntityMapper {
 
     private ProductEntityMapper() {
+    }
+
+    public static List<Product> mapToProduct(List<ProductEntity> allProductEntities) {
+        return allProductEntities
+                .stream()
+                .map(ProductEntityMapper::mapToProductFunction)
+                .collect(Collectors.toList());
+    }
+
+    public static List<ProductEntity> mapToProductEntity(List<Product> allProducts) {
+        return allProducts
+                .stream()
+                .map(ProductEntityMapper::mapToProductEntityFunction)
+                .collect(Collectors.toList());
     }
 
     public static Product mapToProduct(ProductEntity productEntity) {

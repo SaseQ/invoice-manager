@@ -3,9 +3,26 @@ package it.marczuk.invoicemanager.infrastructure.persistance.database.address.en
 import com.neovisionaries.i18n.CountryCode;
 import it.marczuk.invoicemanager.domain.address.model.Address;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class AddressEntityMapper {
 
     private AddressEntityMapper() {
+    }
+
+    public static List<Address> mapToAddress(List<AddressEntity> allAddressEntities) {
+        return allAddressEntities
+                .stream()
+                .map(AddressEntityMapper::mapToAddressFunction)
+                .collect(Collectors.toList());
+    }
+
+    public static List<AddressEntity> mapToAddressEntity(List<Address> allAddresses) {
+        return allAddresses
+                .stream()
+                .map(AddressEntityMapper::mapToAddressEntityFunction)
+                .collect(Collectors.toList());
     }
 
     public static Address mapToAddress(AddressEntity addressEntity) {

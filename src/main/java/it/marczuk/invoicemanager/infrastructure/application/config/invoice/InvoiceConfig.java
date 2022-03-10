@@ -1,4 +1,4 @@
-package it.marczuk.invoicemanager.infrastructure.application.rest.invoice;
+package it.marczuk.invoicemanager.infrastructure.application.config.invoice;
 
 import it.marczuk.invoicemanager.domain.common.emailnotification.EmailNotificationPort;
 import it.marczuk.invoicemanager.domain.invoice.adapter.InvoiceServiceAdapter;

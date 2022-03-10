@@ -1,4 +1,4 @@
-package it.marczuk.invoicemanager.infrastructure.application.rest.invoice.dto.DtoMapper;
+package it.marczuk.invoicemanager.infrastructure.application.rest.invoice.mapper;
 
 import it.marczuk.invoicemanager.domain.invoice.model.Invoice;
 import it.marczuk.invoicemanager.infrastructure.application.rest.invoice.dto.InvoiceDto;

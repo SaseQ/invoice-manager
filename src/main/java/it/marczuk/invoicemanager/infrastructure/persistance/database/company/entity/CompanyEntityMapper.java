@@ -3,9 +3,26 @@ package it.marczuk.invoicemanager.infrastructure.persistance.database.company.en
 import it.marczuk.invoicemanager.domain.company.model.Company;
 import it.marczuk.invoicemanager.infrastructure.persistance.database.address.entity.AddressEntityMapper;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class CompanyEntityMapper {
 
     private CompanyEntityMapper() {
+    }
+
+    public static List<Company> mapToCompany(List<CompanyEntity> allCompanyEntities) {
+        return allCompanyEntities
+                .stream()
+                .map(CompanyEntityMapper::mapToCompanyFunction)
+                .collect(Collectors.toList());
+    }
+
+    public static List<CompanyEntity> mapToCompanyEntity(List<Company> allCompanies) {
+        return allCompanies
+                .stream()
+                .map(CompanyEntityMapper::mapToCompanyEntityFunction)
+                .collect(Collectors.toList());
     }
 
     public static Company mapToCompany(CompanyEntity companyEntity) {
