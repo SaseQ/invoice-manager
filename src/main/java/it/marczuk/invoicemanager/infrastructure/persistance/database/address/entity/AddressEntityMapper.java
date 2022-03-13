@@ -40,7 +40,7 @@ public class AddressEntityMapper {
                 addressEntity.getHouseNumber(),
                 addressEntity.getZipCode(),
                 addressEntity.getCity(),
-                CountryCode.getByAlpha4Code(addressEntity.getCountry())
+                CountryCode.getByAlpha2Code(addressEntity.getCountry())
         );
     }
 
@@ -51,7 +51,7 @@ public class AddressEntityMapper {
                 address.getHouseNumber(),
                 address.getZipCode(),
                 address.getCity(),
-                address.getCountry().getName()
+                address.getCountry().getAlpha2()
         );
     }
 }

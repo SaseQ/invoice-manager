@@ -21,20 +21,22 @@ public class ProductEntity {
     private String name;
     private Integer count;
     private BigDecimal netPrice;
-    private Double vatValue;
-    private BigDecimal vatSum;
-    private BigDecimal grossPrice;
+    private BigDecimal netValue;
+    private Integer taxValue;
+    private BigDecimal taxSum;
+    private BigDecimal grossValue;
 
-    @OneToOne(mappedBy = "product")
+    @ManyToOne
     private InvoiceEntity invoice;
 
-    public ProductEntity(Long id, String name, Integer count, BigDecimal netPrice, Double vatValue, BigDecimal vatSum, BigDecimal grossPrice) {
+    public ProductEntity(Long id, String name, Integer count, BigDecimal netPrice, BigDecimal netValue, Integer taxValue, BigDecimal taxSum, BigDecimal grossValue) {
         this.id = id;
         this.name = name;
         this.count = count;
         this.netPrice = netPrice;
-        this.vatValue = vatValue;
-        this.vatSum = vatSum;
-        this.grossPrice = grossPrice;
+        this.netValue = netValue;
+        this.taxValue = taxValue;
+        this.taxSum = taxSum;
+        this.grossValue = grossValue;
     }
 }

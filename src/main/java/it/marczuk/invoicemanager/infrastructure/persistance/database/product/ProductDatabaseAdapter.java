@@ -24,4 +24,10 @@ public class ProductDatabaseAdapter implements ProductRepositoryPort {
         ProductEntity result = productRepository.save(ProductEntityMapper.mapToProductEntity(product));
         return ProductEntityMapper.mapToProduct(result);
     }
+
+    @Override
+    public List<Product> saveAll(List<Product> products) {
+        List<ProductEntity> result = productRepository.saveAll(ProductEntityMapper.mapToProductEntity(products));
+        return ProductEntityMapper.mapToProduct(result);
+    }
 }

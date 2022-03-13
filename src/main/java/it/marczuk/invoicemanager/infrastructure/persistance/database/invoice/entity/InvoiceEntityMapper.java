@@ -42,10 +42,11 @@ public class InvoiceEntityMapper {
                 invoiceEntity.getDatePerformanceOfService(),
                 CompanyEntityMapper.mapToCompany(invoiceEntity.getSeller()),
                 CompanyEntityMapper.mapToCompany(invoiceEntity.getBuyer()),
-                ProductEntityMapper.mapToProduct(invoiceEntity.getProduct()),
+                ProductEntityMapper.mapToProduct(invoiceEntity.getProducts()),
                 invoiceEntity.getPayType(),
                 invoiceEntity.getPaymentDeadline(),
-                invoiceEntity.getSumToPay()
+                invoiceEntity.getSumToPay(),
+                invoiceEntity.getSumToPayAsWords()
         );
     }
 
@@ -57,10 +58,11 @@ public class InvoiceEntityMapper {
                 invoice.getDatePerformanceOfService(),
                 CompanyEntityMapper.mapToCompanyEntity(invoice.getSeller()),
                 CompanyEntityMapper.mapToCompanyEntity(invoice.getBuyer()),
-                ProductEntityMapper.mapToProductEntity(invoice.getProduct()),
+                ProductEntityMapper.mapToProductEntity(invoice.getProducts()),
                 invoice.getPayType(),
                 invoice.getPaymentDeadline(),
-                invoice.getSumToPay()
+                invoice.getSumToPay(),
+                invoice.getSumToPayAsWords()
         );
     }
 }

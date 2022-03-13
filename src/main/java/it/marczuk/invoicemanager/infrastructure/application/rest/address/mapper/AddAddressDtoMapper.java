@@ -1,5 +1,6 @@
 package it.marczuk.invoicemanager.infrastructure.application.rest.address.mapper;
 
+import com.neovisionaries.i18n.CountryCode;
 import it.marczuk.invoicemanager.domain.address.model.Address;
 import it.marczuk.invoicemanager.infrastructure.application.rest.address.dto.AddAddressDto;
 
@@ -21,7 +22,7 @@ public class AddAddressDtoMapper {
                 addAddressDto.getHouseNumber(),
                 addAddressDto.getZipCode(),
                 addAddressDto.getCity(),
-                addAddressDto.getCountry()
+                CountryCode.getByAlpha2Code(addAddressDto.getCountry())
         );
     }
 }

@@ -9,4 +9,6 @@ public interface ProductServicePort {
     List<Product> getProducts();
 
     Product addProduct(Product product);
+
+    List<Product> addProducts(List<Product> products);
 }

@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface EmailNotificationPort {
 
-    public void send(List<String> recipients, String message);
+    void send(List<String> recipients, String message);
 }

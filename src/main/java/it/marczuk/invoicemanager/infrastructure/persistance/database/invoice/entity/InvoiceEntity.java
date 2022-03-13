@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "invoices")
@@ -28,10 +29,11 @@ public class InvoiceEntity {
     private CompanyEntity seller;
     @ManyToOne
     private CompanyEntity buyer;
-    @OneToOne
-    private ProductEntity product;
+    @OneToMany(mappedBy = "invoice")
+    private List<ProductEntity> products;
     private PayType payType;
     private LocalDate paymentDeadline;
     private BigDecimal sumToPay;
+    private String sumToPayAsWords;
 
 }

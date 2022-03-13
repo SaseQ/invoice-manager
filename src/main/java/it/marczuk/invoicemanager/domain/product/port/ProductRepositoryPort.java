@@ -10,4 +10,6 @@ public interface ProductRepositoryPort {
 
     Product save(Product product);
 
+    List<Product> saveAll(List<Product> products);
+
 }

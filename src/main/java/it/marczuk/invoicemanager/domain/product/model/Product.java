@@ -13,7 +13,8 @@ public class Product {
     private String name;
     private Integer count;
     private BigDecimal netPrice;
-    private Double vatValue;
-    private BigDecimal vatSum;
-    private BigDecimal grossPrice;
+    private BigDecimal netValue;
+    private Integer taxValue;
+    private BigDecimal taxSum;
+    private BigDecimal grossValue;
 }

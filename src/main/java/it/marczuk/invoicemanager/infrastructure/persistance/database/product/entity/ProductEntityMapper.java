@@ -38,9 +38,10 @@ public class ProductEntityMapper {
                 productEntity.getName(),
                 productEntity.getCount(),
                 productEntity.getNetPrice(),
-                productEntity.getVatValue(),
-                productEntity.getVatSum(),
-                productEntity.getGrossPrice()
+                productEntity.getNetValue(),
+                productEntity.getTaxValue(),
+                productEntity.getTaxSum(),
+                productEntity.getGrossValue()
         );
     }
 
@@ -50,9 +51,10 @@ public class ProductEntityMapper {
                 product.getName(),
                 product.getCount(),
                 product.getNetPrice(),
-                product.getVatValue(),
-                product.getVatSum(),
-                product.getGrossPrice()
+                product.getNetValue(),
+                product.getTaxValue(),
+                product.getTaxSum(),
+                product.getGrossValue()
         );
     }
 }

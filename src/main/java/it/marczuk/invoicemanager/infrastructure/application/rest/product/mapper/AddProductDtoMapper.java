@@ -3,11 +3,26 @@ package it.marczuk.invoicemanager.infrastructure.application.rest.product.mapper
 import it.marczuk.invoicemanager.domain.product.model.Product;
 import it.marczuk.invoicemanager.infrastructure.application.rest.product.dto.AddProductDto;
 
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class AddProductDtoMapper {
 
     private static final Long EMPTY_ID = null;
+    private static final BigDecimal EMPTY_NET_VALUE = null;
+    private static final Integer EMPTY_VAT_VALUE = null;
+    private static final BigDecimal EMPTY_VAT_SUM = null;
+    private static final BigDecimal EMPTY_GROSS_VALUE = null;
 
     private AddProductDtoMapper() {
+    }
+
+    public static List<Product> mapToProduct(List<AddProductDto> allAddProductDtos) {
+        return allAddProductDtos.
+                stream()
+                .map(AddProductDtoMapper::mapToProductFunction)
+                .collect(Collectors.toList());
     }
 
     public static Product mapToProduct(AddProductDto addProductDto) {
@@ -20,9 +35,10 @@ public class AddProductDtoMapper {
                 addProductDto.getName(),
                 addProductDto.getCount(),
                 addProductDto.getNetPrice(),
-                addProductDto.getVatValue(),
-                addProductDto.getVatSum(),
-                addProductDto.getGrossPrice()
+                EMPTY_NET_VALUE,
+                EMPTY_VAT_VALUE,
+                EMPTY_VAT_SUM,
+                EMPTY_GROSS_VALUE
         );
     }
 }

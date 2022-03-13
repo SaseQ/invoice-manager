@@ -9,6 +9,7 @@ import it.marczuk.invoicemanager.domain.product.model.Product;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 public class TestInvoiceData {
 
@@ -22,10 +23,11 @@ public class TestInvoiceData {
                 LocalDate.of(2021, 3, 7),
                 createTestCompany(),
                 createTestCompany(),
-                createTestProduct(),
+                List.of(createTestProduct()),
                 PayType.BANK_TRANSFER,
                 LocalDate.of(2021, 3, 8),
-                BigDecimal.valueOf(59.99)
+                BigDecimal.valueOf(59.99),
+                "Pisiąt pinć złotych"
         );
     }
 
@@ -57,7 +59,8 @@ public class TestInvoiceData {
                 "Test Name",
                 1,
                 BigDecimal.valueOf(59.99),
-                0.1,
+                BigDecimal.valueOf(59.99),
+                23,
                 BigDecimal.valueOf(59.99),
                 BigDecimal.valueOf(59.99)
         );

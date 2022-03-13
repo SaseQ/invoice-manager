@@ -1,6 +1,6 @@
 package it.marczuk.invoicemanager.infrastructure.application.rest.address.dto;
 
-import com.neovisionaries.i18n.CountryCode;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,5 +12,6 @@ public class AddAddressDto {
     private String houseNumber;
     private String zipCode;
     private String city;
-    private CountryCode country;
+    @ApiModelProperty(example = "PL")
+    private String country;
 }

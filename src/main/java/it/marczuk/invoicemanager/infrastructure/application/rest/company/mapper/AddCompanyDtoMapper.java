@@ -1,6 +1,7 @@
 package it.marczuk.invoicemanager.infrastructure.application.rest.company.mapper;
 
 import it.marczuk.invoicemanager.domain.company.model.Company;
+import it.marczuk.invoicemanager.infrastructure.application.rest.address.mapper.AddAddressDtoMapper;
 import it.marczuk.invoicemanager.infrastructure.application.rest.company.dto.AddCompanyDto;
 
 public class AddCompanyDtoMapper {
@@ -21,7 +22,7 @@ public class AddCompanyDtoMapper {
                 addCompanyDto.getCompanyOwnerFirstName(),
                 addCompanyDto.getCompanyOwnerSecondName(),
                 addCompanyDto.getTaxIdentificationNumber(),
-                addCompanyDto.getAddress()
+                AddAddressDtoMapper.mapToAddress(addCompanyDto.getAddress())
         );
     }
 }

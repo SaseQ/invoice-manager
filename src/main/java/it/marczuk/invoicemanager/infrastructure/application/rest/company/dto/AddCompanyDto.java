@@ -1,6 +1,6 @@
 package it.marczuk.invoicemanager.infrastructure.application.rest.company.dto;
 
-import it.marczuk.invoicemanager.domain.address.model.Address;
+import it.marczuk.invoicemanager.infrastructure.application.rest.address.dto.AddAddressDto;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,5 +12,5 @@ public class AddCompanyDto {
     private String companyOwnerFirstName;
     private String companyOwnerSecondName;
     private String taxIdentificationNumber;
-    private Address address;
+    private AddAddressDto address;
 }
