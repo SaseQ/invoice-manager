@@ -18,6 +18,11 @@ public class CompanyServiceAdapter implements CompanyServicePort {
     }
 
     @Override
+    public Company getCompanyById(Long id) {
+        return companyService.getCompanyById(id);
+    }
+
+    @Override
     public Company addCompany(Company company) {
         return companyService.addCompany(company);
     }

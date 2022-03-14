@@ -8,6 +8,8 @@ public interface InvoiceServicePort {
 
     List<Invoice> getInvoices();
 
+    Invoice getInvoiceById(Long id);
+
     Invoice addInvoice(Invoice invoice);
 
 }

@@ -8,6 +8,7 @@ import it.marczuk.invoicemanager.infrastructure.persistance.database.product.rep
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class ProductDatabaseAdapter implements ProductRepositoryPort {
@@ -17,6 +18,11 @@ public class ProductDatabaseAdapter implements ProductRepositoryPort {
     @Override
     public List<Product> findAll() {
         return ProductEntityMapper.mapToProduct(productRepository.findAll());
+    }
+
+    @Override
+    public Optional<Product> findById(Long id) {
+        return ProductEntityMapper.mapToProduct(productRepository.findById(id));
     }
 
     @Override

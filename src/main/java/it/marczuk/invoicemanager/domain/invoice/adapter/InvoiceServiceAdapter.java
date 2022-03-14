@@ -18,6 +18,11 @@ public class InvoiceServiceAdapter implements InvoiceServicePort {
     }
 
     @Override
+    public Invoice getInvoiceById(Long id) {
+        return invoiceService.getInvoiceById(id);
+    }
+
+    @Override
     public Invoice addInvoice(Invoice invoice) {
         return invoiceService.addInvoice(invoice);
     }

@@ -8,6 +8,7 @@ import it.marczuk.invoicemanager.infrastructure.persistance.database.invoice.rep
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class InvoiceDatabaseAdapter implements InvoiceRepositoryPort {
@@ -17,6 +18,11 @@ public class InvoiceDatabaseAdapter implements InvoiceRepositoryPort {
     @Override
     public List<Invoice> findAll() {
         return InvoiceEntityMapper.mapToInvoice(invoiceRepository.findAll());
+    }
+
+    @Override
+    public Optional<Invoice> findById(Long id) {
+        return InvoiceEntityMapper.mapToInvoice(invoiceRepository.findById(id));
     }
 
     @Override

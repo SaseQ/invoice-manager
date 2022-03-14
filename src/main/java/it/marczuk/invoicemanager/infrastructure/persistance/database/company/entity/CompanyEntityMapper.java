@@ -4,6 +4,7 @@ import it.marczuk.invoicemanager.domain.company.model.Company;
 import it.marczuk.invoicemanager.infrastructure.persistance.database.address.entity.AddressEntityMapper;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class CompanyEntityMapper {
@@ -31,6 +32,11 @@ public class CompanyEntityMapper {
 
     public static CompanyEntity mapToCompanyEntity(Company company) {
         return mapToCompanyEntityFunction(company);
+    }
+
+    public static Optional<Company> mapToCompany(Optional<CompanyEntity> companyEntityOptional) {
+        return companyEntityOptional
+                .map(CompanyEntityMapper::mapToCompanyFunction);
     }
 
     private static Company mapToCompanyFunction(CompanyEntity companyEntity) {

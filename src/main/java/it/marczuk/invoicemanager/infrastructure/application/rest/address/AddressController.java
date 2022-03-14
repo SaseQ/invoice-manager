@@ -21,6 +21,11 @@ public class AddressController {
         return addressServicePort.getAddresses();
     }
 
+    @GetMapping("/get/{id}")
+    public Address getAddressById(@PathVariable Long id) {
+        return addressServicePort.getAddressById(id);
+    }
+
     @PostMapping("/add")
     public Address addAddress(@RequestBody AddAddressDto addAddressDto) {
         return addressServicePort.addAddress(AddAddressDtoMapper.mapToAddress(addAddressDto));

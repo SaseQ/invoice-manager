@@ -18,6 +18,11 @@ public class AddressServiceAdapter implements AddressServicePort {
     }
 
     @Override
+    public Address getAddressById(Long id) {
+        return addressService.getAddressById(id);
+    }
+
+    @Override
     public Address addAddress(Address address) {
         return addressService.addAddress(address);
     }

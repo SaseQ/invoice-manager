@@ -4,6 +4,7 @@ import com.neovisionaries.i18n.CountryCode;
 import it.marczuk.invoicemanager.domain.address.model.Address;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class AddressEntityMapper {
@@ -31,6 +32,11 @@ public class AddressEntityMapper {
 
     public static AddressEntity mapToAddressEntity(Address address) {
         return mapToAddressEntityFunction(address);
+    }
+
+    public static Optional<Address> mapToAddress(Optional<AddressEntity> addressEntityOptional) {
+        return addressEntityOptional
+                .map(AddressEntityMapper::mapToAddressFunction);
     }
 
     private static Address mapToAddressFunction(AddressEntity addressEntity) {

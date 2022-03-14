@@ -21,6 +21,11 @@ public class ProductController {
         return productServicePort.getProducts();
     }
 
+    @GetMapping("/get/{id}")
+    public Product getProductById(@PathVariable Long id) {
+        return productServicePort.getProductById(id);
+    }
+
     @PostMapping("/add")
     public Product addProduct(@RequestBody AddProductDto addProductDto) {
         return productServicePort.addProduct(AddProductDtoMapper.mapToProduct(addProductDto));

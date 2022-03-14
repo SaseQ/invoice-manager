@@ -8,6 +8,8 @@ public interface ProductServicePort {
 
     List<Product> getProducts();
 
+    Product getProductById(Long id);
+
     Product addProduct(Product product);
 
     List<Product> addProducts(List<Product> products);

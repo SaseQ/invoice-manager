@@ -3,6 +3,7 @@ package it.marczuk.invoicemanager.domain.product.service;
 import it.marczuk.invoicemanager.domain.common.taxclient.TaxClientPort;
 import it.marczuk.invoicemanager.domain.product.model.Product;
 import it.marczuk.invoicemanager.domain.product.port.ProductRepositoryPort;
+import it.marczuk.invoicemanager.infrastructure.application.exception.ElementNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
@@ -16,6 +17,11 @@ public class ProductService {
 
     public List<Product> getProducts() {
         return productRepositoryPort.findAll();
+    }
+
+    public Product getProductById(Long id) {
+        return productRepositoryPort.findById(id)
+                .orElseThrow(() -> new ElementNotFoundException("Could not find product by id: " + id));
     }
 
     public Product addProduct(Product product) {

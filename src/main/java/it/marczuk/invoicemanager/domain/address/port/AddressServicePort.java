@@ -8,5 +8,7 @@ public interface AddressServicePort {
 
     List<Address> getAddresses();
 
+    Address getAddressById(Long id);
+
     Address addAddress(Address address);
 }

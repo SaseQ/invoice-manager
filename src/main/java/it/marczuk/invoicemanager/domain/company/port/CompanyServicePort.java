@@ -8,6 +8,8 @@ public interface CompanyServicePort {
 
     List<Company> getCompanies();
 
+    Company getCompanyById(Long id);
+
     Company addCompany(Company company);
 
 }

@@ -7,6 +7,7 @@ import it.marczuk.invoicemanager.domain.invoice.model.Invoice;
 import it.marczuk.invoicemanager.domain.invoice.port.InvoiceRepositoryPort;
 import it.marczuk.invoicemanager.domain.product.model.Product;
 import it.marczuk.invoicemanager.domain.product.port.ProductServicePort;
+import it.marczuk.invoicemanager.infrastructure.application.exception.ElementNotFoundException;
 import lombok.RequiredArgsConstructor;
 import pl.allegro.finance.tradukisto.MoneyConverters;
 
@@ -23,6 +24,11 @@ public class InvoiceService {
 
     public List<Invoice> getInvoices() {
         return invoiceRepositoryPort.findAll();
+    }
+
+    public Invoice getInvoiceById(Long id) {
+        return invoiceRepositoryPort.findById(id)
+                .orElseThrow(() -> new ElementNotFoundException("Could not find invoice by id: " + id));
     }
 
     public Invoice addInvoice(Invoice invoice) {

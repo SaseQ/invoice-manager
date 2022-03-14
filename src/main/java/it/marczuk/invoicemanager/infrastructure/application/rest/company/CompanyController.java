@@ -21,6 +21,11 @@ public class CompanyController {
         return companyServicePort.getCompanies();
     }
 
+    @GetMapping("/get/{id}")
+    public Company getCompanyById(@PathVariable Long id) {
+        return companyServicePort.getCompanyById(id);
+    }
+
     @PostMapping("/add")
     public Company addCompany(@RequestBody AddCompanyDto addCompanyDto) {
         return companyServicePort.addCompany(AddCompanyDtoMapper.mapToCompany(addCompanyDto));

@@ -8,6 +8,7 @@ import it.marczuk.invoicemanager.infrastructure.persistance.database.address.rep
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class AddressDatabaseAdapter implements AddressRepositoryPort {
@@ -17,6 +18,11 @@ public class AddressDatabaseAdapter implements AddressRepositoryPort {
     @Override
     public List<Address> findAll() {
         return AddressEntityMapper.mapToAddress(addressRepository.findAll());
+    }
+
+    @Override
+    public Optional<Address> findById(Long id) {
+        return AddressEntityMapper.mapToAddress(addressRepository.findById(id));
     }
 
     @Override

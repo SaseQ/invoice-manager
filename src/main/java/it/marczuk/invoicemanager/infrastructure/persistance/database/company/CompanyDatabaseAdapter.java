@@ -8,6 +8,7 @@ import it.marczuk.invoicemanager.infrastructure.persistance.database.company.rep
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class CompanyDatabaseAdapter implements CompanyRepositoryPort {
@@ -17,6 +18,11 @@ public class CompanyDatabaseAdapter implements CompanyRepositoryPort {
     @Override
     public List<Company> findAll() {
         return CompanyEntityMapper.mapToCompany(companyRepository.findAll());
+    }
+
+    @Override
+    public Optional<Company> findById(Long id) {
+        return CompanyEntityMapper.mapToCompany(companyRepository.findById(id));
     }
 
     @Override

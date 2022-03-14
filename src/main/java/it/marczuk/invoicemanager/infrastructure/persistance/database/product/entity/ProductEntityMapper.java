@@ -3,6 +3,7 @@ package it.marczuk.invoicemanager.infrastructure.persistance.database.product.en
 import it.marczuk.invoicemanager.domain.product.model.Product;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ProductEntityMapper {
@@ -30,6 +31,11 @@ public class ProductEntityMapper {
 
     public static ProductEntity mapToProductEntity(Product product) {
         return mapToProductEntityFunction(product);
+    }
+
+    public static Optional<Product> mapToProduct(Optional<ProductEntity> productEntityOptional) {
+        return productEntityOptional
+                .map(ProductEntityMapper::mapToProductFunction);
     }
 
     private static Product mapToProductFunction(ProductEntity productEntity) {

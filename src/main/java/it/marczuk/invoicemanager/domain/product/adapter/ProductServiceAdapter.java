@@ -18,6 +18,11 @@ public class ProductServiceAdapter implements ProductServicePort {
     }
 
     @Override
+    public Product getProductById(Long id) {
+        return productService.getProductById(id);
+    }
+
+    @Override
     public Product addProduct(Product product) {
         return productService.addProduct(product);
     }

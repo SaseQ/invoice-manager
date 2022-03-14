@@ -5,6 +5,7 @@ import it.marczuk.invoicemanager.infrastructure.persistance.database.company.ent
 import it.marczuk.invoicemanager.infrastructure.persistance.database.product.entity.ProductEntityMapper;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class InvoiceEntityMapper {
@@ -32,6 +33,11 @@ public class InvoiceEntityMapper {
 
     public static InvoiceEntity mapToInvoiceEntity(Invoice invoice) {
         return mapToInvoiceEntityFunction(invoice);
+    }
+
+    public static Optional<Invoice> mapToInvoice(Optional<InvoiceEntity> invoiceEntityOptional) {
+        return invoiceEntityOptional
+                .map(InvoiceEntityMapper::mapToInvoiceFunction);
     }
 
     private static Invoice mapToInvoiceFunction(InvoiceEntity invoiceEntity) {

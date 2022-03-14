@@ -1,5 +1,6 @@
 package it.marczuk.invoicemanager.infrastructure.webclient.tax.mapper;
 
+import it.marczuk.invoicemanager.infrastructure.application.exception.VatStackException;
 import it.marczuk.invoicemanager.infrastructure.webclient.tax.dto.TaxDto;
 import it.marczuk.invoicemanager.infrastructure.webclient.tax.dto.VatStackDto;
 import it.marczuk.invoicemanager.infrastructure.webclient.tax.dto.VatStackRatesDto;
@@ -29,8 +30,8 @@ public class TaxDtoMapper {
             return vatStackDto.getRates().get(0);
         }
         if(ratesSize > 1) {
-            throw new RuntimeException("Rates contains many positions!");
+            throw new VatStackException("Rates contains many positions!");
         }
-        throw new RuntimeException("Rates not exist!");
+        throw new VatStackException("Rates not exist!");
     }
 }
