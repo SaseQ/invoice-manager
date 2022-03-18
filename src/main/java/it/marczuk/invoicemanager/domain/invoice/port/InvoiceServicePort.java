@@ -1,15 +1,20 @@
 package it.marczuk.invoicemanager.domain.invoice.port;
 
-import it.marczuk.invoicemanager.domain.invoice.model.Invoice;
+import it.marczuk.invoicemanager.infrastructure.application.rest.invoice.dto.AddInvoiceDto;
+import it.marczuk.invoicemanager.infrastructure.application.rest.invoice.dto.EditInvoiceDto;
+import it.marczuk.invoicemanager.infrastructure.application.rest.invoice.dto.ReturnInvoiceDto;
 
 import java.util.List;
 
 public interface InvoiceServicePort {
 
-    List<Invoice> getInvoices();
+    List<ReturnInvoiceDto> getInvoices();
 
-    Invoice getInvoiceById(Long id);
+    ReturnInvoiceDto getInvoiceById(Long id);
 
-    Invoice addInvoice(Invoice invoice);
+    ReturnInvoiceDto addInvoice(AddInvoiceDto addInvoiceDto);
 
+    ReturnInvoiceDto editInvoice(EditInvoiceDto editInvoiceDto);
+
+    void deleteInvoice(Long id);
 }

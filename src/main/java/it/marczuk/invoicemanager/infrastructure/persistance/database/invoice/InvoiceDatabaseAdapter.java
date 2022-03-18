@@ -30,4 +30,9 @@ public class InvoiceDatabaseAdapter implements InvoiceRepositoryPort {
         InvoiceEntity result = invoiceRepository.save(InvoiceEntityMapper.mapToInvoiceEntity(invoice));
         return InvoiceEntityMapper.mapToInvoice(result);
     }
+
+    @Override
+    public void delete(Invoice invoice) {
+        invoiceRepository.delete(InvoiceEntityMapper.mapToInvoiceEntity(invoice));
+    }
 }

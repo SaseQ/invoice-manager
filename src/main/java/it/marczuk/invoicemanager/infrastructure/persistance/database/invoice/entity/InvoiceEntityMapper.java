@@ -2,7 +2,6 @@ package it.marczuk.invoicemanager.infrastructure.persistance.database.invoice.en
 
 import it.marczuk.invoicemanager.domain.invoice.model.Invoice;
 import it.marczuk.invoicemanager.infrastructure.persistance.database.company.entity.CompanyEntityMapper;
-import it.marczuk.invoicemanager.infrastructure.persistance.database.product.entity.ProductEntityMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,13 +23,6 @@ public class InvoiceEntityMapper {
         return mapToInvoiceFunction(invoiceEntity);
     }
 
-    public static List<InvoiceEntity> mapToInvoiceEntity(List<Invoice> allInvoices) {
-        return allInvoices.
-                stream()
-                .map(InvoiceEntityMapper::mapToInvoiceEntityFunction)
-                .collect(Collectors.toList());
-    }
-
     public static InvoiceEntity mapToInvoiceEntity(Invoice invoice) {
         return mapToInvoiceEntityFunction(invoice);
     }
@@ -48,7 +40,6 @@ public class InvoiceEntityMapper {
                 invoiceEntity.getDatePerformanceOfService(),
                 CompanyEntityMapper.mapToCompany(invoiceEntity.getSeller()),
                 CompanyEntityMapper.mapToCompany(invoiceEntity.getBuyer()),
-                ProductEntityMapper.mapToProduct(invoiceEntity.getProducts()),
                 invoiceEntity.getPayType(),
                 invoiceEntity.getPaymentDeadline(),
                 invoiceEntity.getSumToPay(),
@@ -64,7 +55,6 @@ public class InvoiceEntityMapper {
                 invoice.getDatePerformanceOfService(),
                 CompanyEntityMapper.mapToCompanyEntity(invoice.getSeller()),
                 CompanyEntityMapper.mapToCompanyEntity(invoice.getBuyer()),
-                ProductEntityMapper.mapToProductEntity(invoice.getProducts()),
                 invoice.getPayType(),
                 invoice.getPaymentDeadline(),
                 invoice.getSumToPay(),

@@ -1,16 +1,24 @@
 package it.marczuk.invoicemanager.domain.product.port;
 
+import it.marczuk.invoicemanager.domain.invoice.model.Invoice;
 import it.marczuk.invoicemanager.domain.product.model.Product;
+import it.marczuk.invoicemanager.infrastructure.application.rest.product.dto.ReturnProductDto;
 
 import java.util.List;
 
 public interface ProductServicePort {
 
-    List<Product> getProducts();
+    List<ReturnProductDto> getProducts();
 
-    Product getProductById(Long id);
+    ReturnProductDto getProductById(Long id);
 
-    Product addProduct(Product product);
+    List<Product> getProductsByInvoice(Invoice invoice);
+
+    ReturnProductDto addProduct(Product product);
 
     List<Product> addProducts(List<Product> products);
+
+    ReturnProductDto editProduct(Product product);
+
+    void deleteProduct(Long id);
 }

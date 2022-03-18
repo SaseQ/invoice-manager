@@ -36,4 +36,16 @@ public class InvoiceEntity {
     private BigDecimal sumToPay;
     private String sumToPayAsWords;
 
+    public InvoiceEntity(Long id, String placeOfIssue, LocalDate dateOfIssue, LocalDate datePerformanceOfService, CompanyEntity seller, CompanyEntity buyer, PayType payType, LocalDate paymentDeadline, BigDecimal sumToPay, String sumToPayAsWords) {
+        this.id = id;
+        this.placeOfIssue = placeOfIssue;
+        this.dateOfIssue = dateOfIssue;
+        this.datePerformanceOfService = datePerformanceOfService;
+        this.seller = seller;
+        this.buyer = buyer;
+        this.payType = payType;
+        this.paymentDeadline = paymentDeadline;
+        this.sumToPay = sumToPay;
+        this.sumToPayAsWords = sumToPayAsWords;
+    }
 }

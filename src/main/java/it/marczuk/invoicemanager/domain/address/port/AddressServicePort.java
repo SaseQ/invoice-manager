@@ -11,4 +11,8 @@ public interface AddressServicePort {
     Address getAddressById(Long id);
 
     Address addAddress(Address address);
+
+    Address editAddress(Address address);
+
+    void deleteAddress(Long id);
 }

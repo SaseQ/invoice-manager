@@ -1,10 +1,14 @@
 package it.marczuk.invoicemanager.domain.product.service;
 
 import it.marczuk.invoicemanager.domain.common.taxclient.TaxClientPort;
+import it.marczuk.invoicemanager.domain.invoice.model.Invoice;
 import it.marczuk.invoicemanager.domain.product.model.Product;
 import it.marczuk.invoicemanager.domain.product.port.ProductRepositoryPort;
 import it.marczuk.invoicemanager.infrastructure.application.exception.ElementNotFoundException;
+import it.marczuk.invoicemanager.infrastructure.application.rest.product.dto.ReturnProductDto;
+import it.marczuk.invoicemanager.infrastructure.application.rest.product.mapper.ReturnProductDtoMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,16 +19,63 @@ public class ProductService {
     private final ProductRepositoryPort productRepositoryPort;
     private final TaxClientPort taxClientPort;
 
-    public List<Product> getProducts() {
-        return productRepositoryPort.findAll();
+    private static final String PRODUCT_ERROR_MESSAGE = "Could not find product by id: ";
+
+    public List<ReturnProductDto> getProducts() {
+        return ReturnProductDtoMapper.mapToReturnProductDto(productRepositoryPort.findAll());
     }
 
-    public Product getProductById(Long id) {
-        return productRepositoryPort.findById(id)
-                .orElseThrow(() -> new ElementNotFoundException("Could not find product by id: " + id));
+    public ReturnProductDto getProductById(Long id) {
+        Product product = productRepositoryPort.findById(id)
+                .orElseThrow(() -> new ElementNotFoundException(PRODUCT_ERROR_MESSAGE + id));
+        return ReturnProductDtoMapper.mapToReturnProductDto(product);
     }
 
-    public Product addProduct(Product product) {
+    public List<Product> getProductByInvoice(Invoice invoice) {
+        return productRepositoryPort.findByInvoice(invoice);
+    }
+
+    public ReturnProductDto addProduct(Product product) {
+        Product finalProduct = priceCalculations(product);
+        return ReturnProductDtoMapper.mapToReturnProductDto(productRepositoryPort.save(finalProduct));
+    }
+
+    public List<Product> addProducts(List<Product> products) {
+        products.forEach(this::priceCalculations);
+        return productRepositoryPort.saveAll(products);
+    }
+
+    @Transactional
+    public ReturnProductDto editProduct(Product product) {
+        Product productEdited = productRepositoryPort.findById(product.getId())
+                .orElseThrow(() -> new ElementNotFoundException(PRODUCT_ERROR_MESSAGE + product.getId()));
+
+        productEdited.setName(product.getName());
+
+        if(product.getNetPrice().doubleValue() != productEdited.getNetPrice().doubleValue() ||
+                product.getCount().intValue() != productEdited.getCount().intValue()) {
+            Product finalProduct = priceCalculations(product);
+
+            productEdited.setCount(finalProduct.getCount());
+            productEdited.setNetPrice(finalProduct.getNetPrice());
+            productEdited.setNetValue(finalProduct.getNetValue());
+            productEdited.setTaxValue(finalProduct.getTaxValue());
+            productEdited.setTaxSum(finalProduct.getTaxSum());
+            productEdited.setGrossValue(finalProduct.getGrossValue());
+        }
+
+        Product result = productRepositoryPort.save(productEdited);
+        return ReturnProductDtoMapper.mapToReturnProductDto(result);
+    }
+
+    public void deleteProduct(Long id) {
+        Product product = productRepositoryPort.findById(id)
+                .orElseThrow(() -> new ElementNotFoundException(PRODUCT_ERROR_MESSAGE + id));
+
+        productRepositoryPort.delete(product);
+    }
+
+    private Product priceCalculations(Product product) {
         //set NetValue
         BigDecimal netValue = enumerateNetValue(product.getNetPrice(), product.getCount());
         product.setNetValue(netValue);
@@ -42,30 +93,7 @@ public class ProductService {
         BigDecimal grossValue = enumerateGrossValue(product.getNetValue(), taxSum);
         product.setGrossValue(grossValue);
 
-        return productRepositoryPort.save(product);
-    }
-
-    public List<Product> addProducts(List<Product> products) {
-        products.forEach(product -> {
-            //set NetValue
-            BigDecimal netValue = enumerateNetValue(product.getNetPrice(), product.getCount());
-            product.setNetValue(netValue);
-
-            //set taxValue
-            Integer taxValue = enumerateTaxValue("PL"); //Change countryCode
-            product.setTaxValue(taxValue);
-
-            //set taxSum
-            double taxConverter = enumerateTaxConverter(taxValue);
-            BigDecimal taxSum = enumerateTaxSum(product.getNetValue(), taxConverter);
-            product.setTaxSum(taxSum);
-
-            //set grossValue
-            BigDecimal grossValue = enumerateGrossValue(product.getNetValue(), taxSum);
-            product.setGrossValue(grossValue);
-        });
-
-        return productRepositoryPort.saveAll(products);
+        return product;
     }
 
     private BigDecimal enumerateNetValue(BigDecimal netPrice, Integer count) {

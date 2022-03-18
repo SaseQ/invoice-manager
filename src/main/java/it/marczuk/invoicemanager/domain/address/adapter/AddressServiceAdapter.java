@@ -26,4 +26,14 @@ public class AddressServiceAdapter implements AddressServicePort {
     public Address addAddress(Address address) {
         return addressService.addAddress(address);
     }
+
+    @Override
+    public Address editAddress(Address address) {
+        return addressService.editAddress(address);
+    }
+
+    @Override
+    public void deleteAddress(Long id) {
+        addressService.deleteAddress(id);
+    }
 }

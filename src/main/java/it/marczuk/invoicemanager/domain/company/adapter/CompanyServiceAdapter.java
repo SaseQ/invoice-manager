@@ -3,6 +3,7 @@ package it.marczuk.invoicemanager.domain.company.adapter;
 import it.marczuk.invoicemanager.domain.company.model.Company;
 import it.marczuk.invoicemanager.domain.company.port.CompanyServicePort;
 import it.marczuk.invoicemanager.domain.company.service.CompanyService;
+import it.marczuk.invoicemanager.infrastructure.application.rest.company.dto.EditCompanyDto;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -25,5 +26,15 @@ public class CompanyServiceAdapter implements CompanyServicePort {
     @Override
     public Company addCompany(Company company) {
         return companyService.addCompany(company);
+    }
+
+    @Override
+    public Company editCompany(EditCompanyDto editCompanyDto) {
+        return companyService.editCompany(editCompanyDto);
+    }
+
+    @Override
+    public void deleteCompany(Long id) {
+        companyService.deleteCompany(id);
     }
 }

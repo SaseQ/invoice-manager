@@ -1,14 +1,13 @@
-package it.marczuk.invoicemanager.domain.product.model;
+package it.marczuk.invoicemanager.infrastructure.application.rest.product.dto;
 
-import it.marczuk.invoicemanager.domain.invoice.model.Invoice;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
 
 @Data
-@AllArgsConstructor
-public class Product {
+@Builder
+public class ReturnProductDto {
 
     private Long id;
     private String name;
@@ -18,5 +17,4 @@ public class Product {
     private Integer taxValue;
     private BigDecimal taxSum;
     private BigDecimal grossValue;
-    private Invoice invoice;
 }

@@ -3,7 +3,9 @@ package it.marczuk.invoicemanager.infrastructure.application.rest.address;
 import it.marczuk.invoicemanager.domain.address.model.Address;
 import it.marczuk.invoicemanager.domain.address.port.AddressServicePort;
 import it.marczuk.invoicemanager.infrastructure.application.rest.address.dto.AddAddressDto;
+import it.marczuk.invoicemanager.infrastructure.application.rest.address.dto.EditAddressDto;
 import it.marczuk.invoicemanager.infrastructure.application.rest.address.mapper.AddAddressDtoMapper;
+import it.marczuk.invoicemanager.infrastructure.application.rest.address.mapper.EditAddressDtoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,5 +31,15 @@ public class AddressController {
     @PostMapping("/add")
     public Address addAddress(@RequestBody AddAddressDto addAddressDto) {
         return addressServicePort.addAddress(AddAddressDtoMapper.mapToAddress(addAddressDto));
+    }
+
+    @PutMapping("/update")
+    public Address editAddress(@RequestBody EditAddressDto editAddressDto) {
+        return addressServicePort.editAddress(EditAddressDtoMapper.mapToAddress(editAddressDto));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteAddress(@PathVariable Long id) {
+        addressServicePort.deleteAddress(id);
     }
 }

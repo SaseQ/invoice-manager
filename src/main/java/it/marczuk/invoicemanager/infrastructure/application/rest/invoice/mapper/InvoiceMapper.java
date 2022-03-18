@@ -3,7 +3,6 @@ package it.marczuk.invoicemanager.infrastructure.application.rest.invoice.mapper
 import it.marczuk.invoicemanager.domain.invoice.model.Invoice;
 import it.marczuk.invoicemanager.infrastructure.application.rest.company.mapper.AddCompanyDtoMapper;
 import it.marczuk.invoicemanager.infrastructure.application.rest.invoice.dto.AddInvoiceDto;
-import it.marczuk.invoicemanager.infrastructure.application.rest.product.mapper.AddProductDtoMapper;
 
 import java.math.BigDecimal;
 
@@ -28,7 +27,6 @@ public class InvoiceMapper {
                 invoiceDto.getDatePerformanceOfService(),
                 AddCompanyDtoMapper.mapToCompany(invoiceDto.getSeller()),
                 AddCompanyDtoMapper.mapToCompany(invoiceDto.getBuyer()),
-                AddProductDtoMapper.mapToProduct(invoiceDto.getProducts()),
                 invoiceDto.getPayType(),
                 invoiceDto.getPaymentDeadline(),
                 EMPTY_SUM_TO_PAY,

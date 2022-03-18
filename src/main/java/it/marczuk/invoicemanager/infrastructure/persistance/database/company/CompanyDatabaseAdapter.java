@@ -30,4 +30,9 @@ public class CompanyDatabaseAdapter implements CompanyRepositoryPort {
         CompanyEntity result = companyRepository.save(CompanyEntityMapper.mapToCompanyEntity(company));
         return CompanyEntityMapper.mapToCompany(result);
     }
+
+    @Override
+    public void delete(Company company) {
+        companyRepository.delete(CompanyEntityMapper.mapToCompanyEntity(company));
+    }
 }

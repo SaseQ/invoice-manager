@@ -13,4 +13,6 @@ public interface InvoiceRepositoryPort {
 
     Invoice save(Invoice invoice);
 
+    void delete(Invoice invoice);
+
 }

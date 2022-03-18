@@ -30,4 +30,9 @@ public class AddressDatabaseAdapter implements AddressRepositoryPort {
         AddressEntity result = addressRepository.save(AddressEntityMapper.mapToAddressEntity(address));
         return AddressEntityMapper.mapToAddress(result);
     }
+
+    @Override
+    public void delete(Address address) {
+        addressRepository.delete(AddressEntityMapper.mapToAddressEntity(address));
+    }
 }

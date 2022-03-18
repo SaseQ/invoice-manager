@@ -12,4 +12,6 @@ public interface CompanyRepositoryPort {
     Optional<Company> findById(Long id);
 
     Company save(Company company);
+
+    void delete(Company company);
 }

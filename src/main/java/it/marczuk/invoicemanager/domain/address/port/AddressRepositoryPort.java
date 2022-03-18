@@ -12,4 +12,6 @@ public interface AddressRepositoryPort {
     Optional<Address> findById(Long id);
 
     Address save(Address address);
+
+    void delete(Address address);
 }
