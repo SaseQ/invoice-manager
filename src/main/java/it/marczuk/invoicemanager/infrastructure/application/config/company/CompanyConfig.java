@@ -1,6 +1,6 @@
 package it.marczuk.invoicemanager.infrastructure.application.config.company;
 
-import it.marczuk.invoicemanager.domain.address.port.AddressRepositoryPort;
+import it.marczuk.invoicemanager.domain.address.port.AddressServicePort;
 import it.marczuk.invoicemanager.domain.company.adapter.CompanyServiceAdapter;
 import it.marczuk.invoicemanager.domain.company.port.CompanyRepositoryPort;
 import it.marczuk.invoicemanager.domain.company.port.CompanyServicePort;
@@ -13,7 +13,7 @@ public class CompanyConfig {
 
     @Bean
     public CompanyServicePort companyServicePort(CompanyRepositoryPort companyRepositoryPort,
-                                                 AddressRepositoryPort addressRepositoryPort) {
-        return new CompanyServiceAdapter(new CompanyService(companyRepositoryPort, addressRepositoryPort));
+                                                 AddressServicePort addressServicePort) {
+        return new CompanyServiceAdapter(new CompanyService(companyRepositoryPort, addressServicePort));
     }
 }

@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -68,7 +67,7 @@ class AddressServiceTest {
         // given
         Address address = TestAddressData.getTestAddress(1L);
         when(addressRepositoryPort.findById(address.getId()))
-                .thenAnswer(invocationOnMock -> Optional.of(address));
+                .thenReturn(Optional.of(address));
 
         // then
         assertThatThrownBy(() -> underTest.getAddressById(2L))
@@ -77,10 +76,10 @@ class AddressServiceTest {
     }
 
     @Test
-    void addAddress() {
+    void shouldAddAddress() {
         // given
         Address address = TestAddressData.getTestAddress(null);
-        when(addressRepositoryPort.save(any())).then(invocationOnMock -> {
+        when(addressRepositoryPort.save(address)).thenAnswer(invocationOnMock -> {
             address.setId(1L);
             return address;
         });
@@ -98,12 +97,12 @@ class AddressServiceTest {
     }
 
     @Test
-    void editAddress() {
+    void shouldEditAddress() {
         // given
         Address address = TestAddressData.getTestAddress(1L);
         when(addressRepositoryPort.findById(address.getId()))
-                .thenAnswer(invocationOnMock -> Optional.of(address));
-        when(addressRepositoryPort.save(any())).then(invocationOnMock -> {
+                .thenReturn(Optional.of(address));
+        when(addressRepositoryPort.save(address)).thenAnswer(invocationOnMock -> {
             address.setStreetName("editedStreetName");
             address.setHouseNumber("22");
             address.setZipCode("10-032");
@@ -125,11 +124,11 @@ class AddressServiceTest {
     }
 
     @Test
-    void deleteAddress() {
+    void shouldDeleteAddress() {
         // given
         Address address = TestAddressData.getTestAddress(1L);
         when(addressRepositoryPort.findById(address.getId()))
-                .thenAnswer(invocationOnMock -> Optional.of(address));
+                .thenReturn(Optional.of(address));
 
         // when
         underTest.deleteAddress(address.getId());

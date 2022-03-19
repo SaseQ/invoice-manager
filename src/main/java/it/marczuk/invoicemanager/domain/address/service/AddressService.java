@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 @RequiredArgsConstructor
 public class AddressService {
 
@@ -27,7 +28,6 @@ public class AddressService {
         return addressRepositoryPort.save(address);
     }
 
-    @Transactional
     public Address editAddress(Address address) {
         Address addressEdited = addressRepositoryPort.findById(address.getId())
                 .orElseThrow(() -> new ElementNotFoundException(ADDRESS_ERROR_MESSAGE + address.getId()));

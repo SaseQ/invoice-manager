@@ -14,10 +14,6 @@ public class TestAddressData {
         return createTestAddress(id);
     }
 
-    public static List<Address> getTestAddressList() {
-        return List.of();
-    }
-
     private static Address createTestAddress(Long id) {
         return new Address(
                 id,
