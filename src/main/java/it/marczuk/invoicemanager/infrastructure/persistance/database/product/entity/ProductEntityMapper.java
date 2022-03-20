@@ -1,5 +1,6 @@
 package it.marczuk.invoicemanager.infrastructure.persistance.database.product.entity;
 
+import com.neovisionaries.i18n.CountryCode;
 import it.marczuk.invoicemanager.domain.product.model.Product;
 import it.marczuk.invoicemanager.infrastructure.persistance.database.invoice.entity.InvoiceEntityMapper;
 
@@ -26,10 +27,6 @@ public class ProductEntityMapper {
                 .collect(Collectors.toList());
     }
 
-    public static ProductEntity mapToProductEntity(Product product) {
-        return mapToProductEntityFunction(product);
-    }
-
     public static List<Product> mapToProductWithoutInvoice(List<ProductEntity> allProductEntities) {
         return allProductEntities
                 .stream()
@@ -54,6 +51,7 @@ public class ProductEntityMapper {
         return new Product(
                 productEntity.getId(),
                 productEntity.getName(),
+                CountryCode.getByAlpha2Code(productEntity.getCountry()),
                 productEntity.getCount(),
                 productEntity.getNetPrice(),
                 productEntity.getNetValue(),
@@ -68,6 +66,7 @@ public class ProductEntityMapper {
         return new ProductEntity(
                 product.getId(),
                 product.getName(),
+                product.getCountry().getAlpha2(),
                 product.getCount(),
                 product.getNetPrice(),
                 product.getNetValue(),
@@ -82,6 +81,7 @@ public class ProductEntityMapper {
         return new Product(
                 productEntity.getId(),
                 productEntity.getName(),
+                CountryCode.getByAlpha2Code(productEntity.getCountry()),
                 productEntity.getCount(),
                 productEntity.getNetPrice(),
                 productEntity.getNetValue(),
@@ -96,6 +96,7 @@ public class ProductEntityMapper {
         return new ProductEntity(
                 product.getId(),
                 product.getName(),
+                product.getCountry().getAlpha2(),
                 product.getCount(),
                 product.getNetPrice(),
                 product.getNetValue(),

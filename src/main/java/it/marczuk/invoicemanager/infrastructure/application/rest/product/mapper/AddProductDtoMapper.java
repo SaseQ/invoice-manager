@@ -1,5 +1,6 @@
 package it.marczuk.invoicemanager.infrastructure.application.rest.product.mapper;
 
+import com.neovisionaries.i18n.CountryCode;
 import it.marczuk.invoicemanager.domain.invoice.model.Invoice;
 import it.marczuk.invoicemanager.domain.product.model.Product;
 import it.marczuk.invoicemanager.infrastructure.application.rest.product.dto.AddProductDto;
@@ -26,6 +27,7 @@ public class AddProductDtoMapper {
         return new Product(
                 EMPTY_ID,
                 addProductDto.getName(),
+                CountryCode.getByAlpha2Code(addProductDto.getCountry()),
                 addProductDto.getCount(),
                 addProductDto.getNetPrice(),
                 EMPTY_NET_VALUE,

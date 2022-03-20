@@ -19,6 +19,7 @@ public class ProductEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String country;
     private Integer count;
     private BigDecimal netPrice;
     private BigDecimal netValue;
@@ -29,9 +30,10 @@ public class ProductEntity {
     @ManyToOne
     private InvoiceEntity invoice;
 
-    public ProductEntity(Long id, String name, Integer count, BigDecimal netPrice, BigDecimal netValue, Integer taxValue, BigDecimal taxSum, BigDecimal grossValue) {
+    public ProductEntity(Long id, String name, String country, Integer count, BigDecimal netPrice, BigDecimal netValue, Integer taxValue, BigDecimal taxSum, BigDecimal grossValue) {
         this.id = id;
         this.name = name;
+        this.country = country;
         this.count = count;
         this.netPrice = netPrice;
         this.netValue = netValue;

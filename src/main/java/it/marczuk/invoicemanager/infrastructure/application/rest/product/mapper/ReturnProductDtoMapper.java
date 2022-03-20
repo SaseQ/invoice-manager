@@ -26,6 +26,7 @@ public class ReturnProductDtoMapper {
         return ReturnProductDto.builder()
                 .id(product.getId())
                 .name(product.getName())
+                .country(product.getCountry())
                 .count(product.getCount())
                 .netPrice(product.getNetPrice())
                 .netValue(product.getNetValue())

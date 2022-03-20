@@ -5,6 +5,7 @@ import it.marczuk.invoicemanager.domain.invoice.model.Invoice;
 import it.marczuk.invoicemanager.domain.product.model.Product;
 import it.marczuk.invoicemanager.domain.product.port.ProductRepositoryPort;
 import it.marczuk.invoicemanager.infrastructure.application.exception.ElementNotFoundException;
+import it.marczuk.invoicemanager.infrastructure.application.exception.VatStackException;
 import it.marczuk.invoicemanager.infrastructure.application.rest.product.dto.ReturnProductDto;
 import it.marczuk.invoicemanager.infrastructure.application.rest.product.mapper.ReturnProductDtoMapper;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
+@Transactional
 @RequiredArgsConstructor
 public class ProductService {
 
@@ -45,7 +47,6 @@ public class ProductService {
         return productRepositoryPort.saveAll(products);
     }
 
-    @Transactional
     public ReturnProductDto editProduct(Product product) {
         Product productEdited = productRepositoryPort.findById(product.getId())
                 .orElseThrow(() -> new ElementNotFoundException(PRODUCT_ERROR_MESSAGE + product.getId()));
@@ -53,10 +54,12 @@ public class ProductService {
         productEdited.setName(product.getName());
 
         if(product.getNetPrice().doubleValue() != productEdited.getNetPrice().doubleValue() ||
-                product.getCount().intValue() != productEdited.getCount().intValue()) {
+                product.getCount().intValue() != productEdited.getCount().intValue() ||
+                product.getCountry().getAlpha2().equals(productEdited.getCountry().getAlpha2())) {
             Product finalProduct = priceCalculations(product);
 
             productEdited.setCount(finalProduct.getCount());
+            productEdited.setCountry(finalProduct.getCountry());
             productEdited.setNetPrice(finalProduct.getNetPrice());
             productEdited.setNetValue(finalProduct.getNetValue());
             productEdited.setTaxValue(finalProduct.getTaxValue());
@@ -81,7 +84,7 @@ public class ProductService {
         product.setNetValue(netValue);
 
         //set taxValue
-        Integer taxValue = enumerateTaxValue("PL"); //Change countryCode
+        Integer taxValue = enumerateTaxValue(product.getCountry().getAlpha2());
         product.setTaxValue(taxValue);
 
         //set taxSum
@@ -101,7 +104,11 @@ public class ProductService {
     }
 
     private int enumerateTaxValue(String countryCode) {
-        return taxClientPort.getTax(countryCode).getStandardRate();
+        try {
+            return taxClientPort.getTax(countryCode).getStandardRate();
+        } catch (VatStackException e) {
+            return taxClientPort.getTax("PL").getStandardRate();
+        }
     }
 
     private double enumerateTaxConverter(Integer taxValue) {
