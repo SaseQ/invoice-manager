@@ -6,6 +6,8 @@ import it.marczuk.invoicemanager.domain.product.model.Product;
 import it.marczuk.invoicemanager.infrastructure.application.rest.product.dto.AddProductDto;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AddProductDtoMapper {
 
@@ -17,6 +19,13 @@ public class AddProductDtoMapper {
     private static final Invoice EMPTY_INVOICE = null;
 
     private AddProductDtoMapper() {
+    }
+
+    public static List<Product> mapToProduct(List<AddProductDto> allAddProductDtos) {
+        return allAddProductDtos
+                .stream()
+                .map(AddProductDtoMapper::mapToProductFunction)
+                .collect(Collectors.toList());
     }
 
     public static Product mapToProduct(AddProductDto addProductDto) {

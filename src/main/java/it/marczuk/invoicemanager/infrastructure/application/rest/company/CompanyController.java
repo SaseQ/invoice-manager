@@ -5,6 +5,7 @@ import it.marczuk.invoicemanager.domain.company.port.CompanyServicePort;
 import it.marczuk.invoicemanager.infrastructure.application.rest.company.dto.AddCompanyDto;
 import it.marczuk.invoicemanager.infrastructure.application.rest.company.dto.EditCompanyDto;
 import it.marczuk.invoicemanager.infrastructure.application.rest.company.mapper.AddCompanyDtoMapper;
+import it.marczuk.invoicemanager.infrastructure.application.rest.company.mapper.EditCompanyDtoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +35,7 @@ public class CompanyController {
 
     @PutMapping("/update")
     public Company editCompany(@RequestBody EditCompanyDto editCompanyDto) {
-        return companyServicePort.editCompany(editCompanyDto);
+        return companyServicePort.editCompany(EditCompanyDtoMapper.mapToCompany(editCompanyDto));
     }
 
     @DeleteMapping("/delete/{id}")

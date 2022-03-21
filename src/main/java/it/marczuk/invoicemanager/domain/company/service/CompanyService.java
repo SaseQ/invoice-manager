@@ -5,7 +5,6 @@ import it.marczuk.invoicemanager.domain.address.port.AddressServicePort;
 import it.marczuk.invoicemanager.domain.company.model.Company;
 import it.marczuk.invoicemanager.domain.company.port.CompanyRepositoryPort;
 import it.marczuk.invoicemanager.infrastructure.application.exception.ElementNotFoundException;
-import it.marczuk.invoicemanager.infrastructure.application.rest.company.dto.EditCompanyDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,15 +35,15 @@ public class CompanyService {
         return companyRepositoryPort.save(company);
     }
 
-    public Company editCompany(EditCompanyDto editCompanyDto) {
-        Company companyEdited = companyRepositoryPort.findById(editCompanyDto.getId())
-                .orElseThrow(() -> new ElementNotFoundException(COMPANY_ERROR_MESSAGE + editCompanyDto.getId()));
-        Address addressEdited = addressServicePort.getAddressById(editCompanyDto.getAddressId());
+    public Company editCompany(Company company) {
+        Company companyEdited = companyRepositoryPort.findById(company.getId())
+                .orElseThrow(() -> new ElementNotFoundException(COMPANY_ERROR_MESSAGE + company.getId()));
+        Address addressEdited = addressServicePort.getAddressById(company.getAddress().getId());
 
-        companyEdited.setCompanyName(editCompanyDto.getCompanyName());
-        companyEdited.setCompanyOwnerFirstName(editCompanyDto.getCompanyOwnerFirstName());
-        companyEdited.setCompanyOwnerSecondName(editCompanyDto.getCompanyOwnerSecondName());
-        companyEdited.setTaxIdentificationNumber(editCompanyDto.getTaxIdentificationNumber());
+        companyEdited.setCompanyName(company.getCompanyName());
+        companyEdited.setCompanyOwnerFirstName(company.getCompanyOwnerFirstName());
+        companyEdited.setCompanyOwnerSecondName(company.getCompanyOwnerSecondName());
+        companyEdited.setTaxIdentificationNumber(company.getTaxIdentificationNumber());
         companyEdited.setAddress(addressEdited);
 
         return companyRepositoryPort.save(companyEdited);

@@ -16,6 +16,10 @@ public class TestInvoiceData {
         return createTestInvoice(id);
     }
 
+    public static Invoice getEmptyTestInvoice() {
+        return createEmptyTestInvoice();
+    }
+
     private static Invoice createTestInvoice(Long id) {
         return new Invoice(
                 id,
@@ -28,6 +32,21 @@ public class TestInvoiceData {
                 LocalDate.of(2021, 3, 8),
                 BigDecimal.valueOf(59.99),
                 "Pisiąt pinć złotych"
+        );
+    }
+
+    private static Invoice createEmptyTestInvoice() {
+        return new Invoice(
+                null,
+                "placeOfIssue",
+                LocalDate.of(2021, 3, 6),
+                LocalDate.of(2021, 3, 7),
+                null,
+                null,
+                PayType.BANK_TRANSFER,
+                LocalDate.of(2021, 3, 8),
+                null,
+                null
         );
     }
 }

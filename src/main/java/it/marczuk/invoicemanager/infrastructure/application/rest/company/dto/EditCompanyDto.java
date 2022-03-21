@@ -1,5 +1,6 @@
 package it.marczuk.invoicemanager.infrastructure.application.rest.company.dto;
 
+import it.marczuk.invoicemanager.infrastructure.application.rest.address.dto.EditAddressDto;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,5 +13,5 @@ public class EditCompanyDto {
     private String companyOwnerFirstName;
     private String companyOwnerSecondName;
     private String taxIdentificationNumber;
-    private Long addressId;
+    private EditAddressDto address;
 }

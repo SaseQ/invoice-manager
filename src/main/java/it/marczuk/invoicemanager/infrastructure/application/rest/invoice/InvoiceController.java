@@ -1,9 +1,14 @@
 package it.marczuk.invoicemanager.infrastructure.application.rest.invoice;
 
+import it.marczuk.invoicemanager.domain.invoice.model.Invoice;
 import it.marczuk.invoicemanager.domain.invoice.port.InvoiceServicePort;
+import it.marczuk.invoicemanager.domain.product.model.Product;
 import it.marczuk.invoicemanager.infrastructure.application.rest.invoice.dto.AddInvoiceDto;
 import it.marczuk.invoicemanager.infrastructure.application.rest.invoice.dto.EditInvoiceDto;
 import it.marczuk.invoicemanager.infrastructure.application.rest.invoice.dto.ReturnInvoiceDto;
+import it.marczuk.invoicemanager.infrastructure.application.rest.invoice.mapper.EditInvoiceDtoMapper;
+import it.marczuk.invoicemanager.infrastructure.application.rest.invoice.mapper.InvoiceMapper;
+import it.marczuk.invoicemanager.infrastructure.application.rest.product.mapper.AddProductDtoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,12 +33,14 @@ public class InvoiceController {
 
     @PostMapping("/add")
     public ReturnInvoiceDto addInvoice(@RequestBody AddInvoiceDto addInvoiceDto) {
-        return invoiceServicePort.addInvoice(addInvoiceDto);
+        Invoice invoice = InvoiceMapper.mapToInvoice(addInvoiceDto);
+        List<Product> products = AddProductDtoMapper.mapToProduct(addInvoiceDto.getProducts());
+        return invoiceServicePort.addInvoice(invoice, products);
     }
 
     @PutMapping("/update")
     public ReturnInvoiceDto editInvoice(@RequestBody EditInvoiceDto editInvoiceDto) {
-        return invoiceServicePort.editInvoice(editInvoiceDto);
+        return invoiceServicePort.editInvoice(EditInvoiceDtoMapper.mapToInvoice(editInvoiceDto));
     }
 
     @DeleteMapping("/delete/{id}")

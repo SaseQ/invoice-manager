@@ -25,6 +25,5 @@ public class AddInvoiceDto {
     private PayType payType;
     @ApiModelProperty(example = "2003-03-03")
     private LocalDate paymentDeadline;
-    private String payAccountNumber;
 
 }

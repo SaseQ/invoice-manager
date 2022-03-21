@@ -1,6 +1,5 @@
 package it.marczuk.invoicemanager.domain.invoice.service;
 
-import it.marczuk.invoicemanager.domain.common.emailnotification.EmailNotificationPort;
 import it.marczuk.invoicemanager.domain.company.model.Company;
 import it.marczuk.invoicemanager.domain.company.port.CompanyServicePort;
 import it.marczuk.invoicemanager.domain.invoice.model.Invoice;
@@ -8,12 +7,8 @@ import it.marczuk.invoicemanager.domain.invoice.port.InvoiceRepositoryPort;
 import it.marczuk.invoicemanager.domain.product.model.Product;
 import it.marczuk.invoicemanager.domain.product.port.ProductServicePort;
 import it.marczuk.invoicemanager.infrastructure.application.exception.ElementNotFoundException;
-import it.marczuk.invoicemanager.infrastructure.application.rest.invoice.dto.AddInvoiceDto;
-import it.marczuk.invoicemanager.infrastructure.application.rest.invoice.dto.EditInvoiceDto;
 import it.marczuk.invoicemanager.infrastructure.application.rest.invoice.dto.ReturnInvoiceDto;
-import it.marczuk.invoicemanager.infrastructure.application.rest.invoice.mapper.InvoiceMapper;
 import it.marczuk.invoicemanager.infrastructure.application.rest.invoice.mapper.ReturnInvoiceDtoMapper;
-import it.marczuk.invoicemanager.infrastructure.application.rest.product.mapper.AddProductDtoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import pl.allegro.finance.tradukisto.MoneyConverters;
@@ -21,7 +16,6 @@ import pl.allegro.finance.tradukisto.MoneyConverters;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Transactional
 @RequiredArgsConstructor
@@ -30,7 +24,6 @@ public class InvoiceService {
     private final InvoiceRepositoryPort invoiceRepositoryPort;
     private final CompanyServicePort companyServicePort;
     private final ProductServicePort productServicePort;
-    private final EmailNotificationPort emailNotificationPort;
 
     private static final String INVOICE_ERROR_MESSAGE = "Could not find invoice by id: ";
 
@@ -52,9 +45,7 @@ public class InvoiceService {
         return ReturnInvoiceDtoMapper.mapToReturnInvoiceDto(invoice, products);
     }
 
-    public ReturnInvoiceDto addInvoice(AddInvoiceDto addInvoiceDto) {
-        Invoice invoice = InvoiceMapper.mapToInvoice(addInvoiceDto);
-
+    public ReturnInvoiceDto addInvoice(Invoice invoice, List<Product> productList) {
         //set buyer
         Company buyer = companyServicePort.addCompany(invoice.getBuyer());
         invoice.setBuyer(buyer);
@@ -65,36 +56,31 @@ public class InvoiceService {
 
         Invoice result = invoiceRepositoryPort.save(invoice);
 
-        List<Product> products = addInvoiceDto.getProducts().stream().map(productDto -> {
-            Product product = AddProductDtoMapper.mapToProduct(productDto);
-            product.setInvoice(result);
-            return product;
-        }).collect(Collectors.toList());
+        productList.forEach(product -> product.setInvoice(result));
 
-        List<Product> finalProducts = productServicePort.addProducts(products);
+        List<Product> finalProducts = productServicePort.addProducts(productList);
 
-        Invoice finalInvoice = invoiceCalculation(result, products);
+        Invoice finalInvoice = invoiceCalculation(result, productList);
         Invoice finalResult = invoiceRepositoryPort.save(finalInvoice);
 
-        emailNotificationPort.send(List.of("saseq.pl@gmail.com"), "Invoice id=" + finalResult.getId() + " was added.");
         return ReturnInvoiceDtoMapper.mapToReturnInvoiceDto(finalResult, finalProducts);
     }
 
-    public ReturnInvoiceDto editInvoice(EditInvoiceDto editInvoiceDto) {
-        Invoice invoiceEdited = invoiceRepositoryPort.findById(editInvoiceDto.getId())
-                .orElseThrow(() -> new ElementNotFoundException(INVOICE_ERROR_MESSAGE + editInvoiceDto.getId()));
+    public ReturnInvoiceDto editInvoice(Invoice invoice) {
+        Invoice invoiceEdited = invoiceRepositoryPort.findById(invoice.getId())
+                .orElseThrow(() -> new ElementNotFoundException(INVOICE_ERROR_MESSAGE + invoice.getId()));
 
-        Company sellerEdited = companyServicePort.getCompanyById(editInvoiceDto.getSellerId());
-        Company buyerEdited = companyServicePort.getCompanyById(editInvoiceDto.getBuyerId());
-        List<Product> productsEdited = productServicePort.getProductsByInvoice(invoiceEdited);
+        Company sellerEdited = companyServicePort.getCompanyById(invoice.getSeller().getId());
+        Company buyerEdited = companyServicePort.getCompanyById(invoice.getBuyer().getId());
+        List<Product> productsEdited = productServicePort.getProductsByInvoice(invoice);
 
-        invoiceEdited.setPlaceOfIssue(editInvoiceDto.getPlaceOfIssue());
-        invoiceEdited.setDateOfIssue(editInvoiceDto.getDateOfIssue());
-        invoiceEdited.setDatePerformanceOfService(editInvoiceDto.getDatePerformanceOfService());
+        invoiceEdited.setPlaceOfIssue(invoice.getPlaceOfIssue());
+        invoiceEdited.setDateOfIssue(invoice.getDateOfIssue());
+        invoiceEdited.setDatePerformanceOfService(invoice.getDatePerformanceOfService());
         invoiceEdited.setSeller(sellerEdited);
         invoiceEdited.setBuyer(buyerEdited);
-        invoiceEdited.setPayType(editInvoiceDto.getPayType());
-        invoiceEdited.setPaymentDeadline(editInvoiceDto.getPaymentDeadline());
+        invoiceEdited.setPayType(invoice.getPayType());
+        invoiceEdited.setPaymentDeadline(invoice.getPaymentDeadline());
 
         Invoice finalInvoice = invoiceCalculation(invoiceEdited, productsEdited);
         Invoice result = invoiceRepositoryPort.save(finalInvoice);
