@@ -7,6 +7,8 @@ import it.marczuk.invoicemanager.infrastructure.application.rest.address.dto.Edi
 import it.marczuk.invoicemanager.infrastructure.application.rest.address.mapper.AddAddressDtoMapper;
 import it.marczuk.invoicemanager.infrastructure.application.rest.address.mapper.EditAddressDtoMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,27 +21,30 @@ public class AddressController {
     private final AddressServicePort addressServicePort;
 
     @GetMapping("/get_all")
-    public List<Address> getAddresses() {
-        return addressServicePort.getAddresses();
+    public ResponseEntity<List<Address>> getAddresses() {
+        return ResponseEntity.ok(addressServicePort.getAddresses());
     }
 
     @GetMapping("/get/{id}")
-    public Address getAddressById(@PathVariable Long id) {
-        return addressServicePort.getAddressById(id);
+    public ResponseEntity<Address> getAddressById(@PathVariable Long id) {
+        return ResponseEntity.ok(addressServicePort.getAddressById(id));
     }
 
     @PostMapping("/add")
-    public Address addAddress(@RequestBody AddAddressDto addAddressDto) {
-        return addressServicePort.addAddress(AddAddressDtoMapper.mapToAddress(addAddressDto));
+    public ResponseEntity<Address> addAddress(@RequestBody AddAddressDto addAddressDto) {
+        Address address = addressServicePort.addAddress(AddAddressDtoMapper.mapToAddress(addAddressDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(address);
     }
 
     @PutMapping("/update")
-    public Address editAddress(@RequestBody EditAddressDto editAddressDto) {
-        return addressServicePort.editAddress(EditAddressDtoMapper.mapToAddress(editAddressDto));
+    public ResponseEntity<Address> editAddress(@RequestBody EditAddressDto editAddressDto) {
+        Address address = addressServicePort.editAddress(EditAddressDtoMapper.mapToAddress(editAddressDto));
+        return ResponseEntity.ok(address);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteAddress(@PathVariable Long id) {
+    public ResponseEntity<Long> deleteAddress(@PathVariable Long id) {
         addressServicePort.deleteAddress(id);
+        return ResponseEntity.ok(id);
     }
 }

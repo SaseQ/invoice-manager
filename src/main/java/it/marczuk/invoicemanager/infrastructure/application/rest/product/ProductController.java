@@ -7,6 +7,8 @@ import it.marczuk.invoicemanager.infrastructure.application.rest.product.dto.Ret
 import it.marczuk.invoicemanager.infrastructure.application.rest.product.mapper.AddProductDtoMapper;
 import it.marczuk.invoicemanager.infrastructure.application.rest.product.mapper.EditProductDtoMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,27 +21,30 @@ public class ProductController {
     private final ProductServicePort productServicePort;
 
     @GetMapping("/get_all")
-    public List<ReturnProductDto> getProducts() {
-        return productServicePort.getProducts();
+    public ResponseEntity<List<ReturnProductDto>> getProducts() {
+        return ResponseEntity.ok(productServicePort.getProducts());
     }
 
     @GetMapping("/get/{id}")
-    public ReturnProductDto getProductById(@PathVariable Long id) {
-        return productServicePort.getProductById(id);
+    public ResponseEntity<ReturnProductDto> getProductById(@PathVariable Long id) {
+        return ResponseEntity.ok(productServicePort.getProductById(id));
     }
 
     @PostMapping("/add")
-    public ReturnProductDto addProduct(@RequestBody AddProductDto addProductDto) {
-        return productServicePort.addProduct(AddProductDtoMapper.mapToProduct(addProductDto));
+    public ResponseEntity<ReturnProductDto> addProduct(@RequestBody AddProductDto addProductDto) {
+        ReturnProductDto returnProductDto = productServicePort.addProduct(AddProductDtoMapper.mapToProduct(addProductDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(returnProductDto);
     }
 
     @PutMapping("/update")
-    public ReturnProductDto editProduct(@RequestBody EditProductDto editProductDto) {
-        return productServicePort.editProduct(EditProductDtoMapper.mapToProduct(editProductDto));
+    public ResponseEntity<ReturnProductDto> editProduct(@RequestBody EditProductDto editProductDto) {
+        ReturnProductDto returnProductDto = productServicePort.editProduct(EditProductDtoMapper.mapToProduct(editProductDto));
+        return ResponseEntity.ok(returnProductDto);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<Long> deleteProduct(@PathVariable Long id) {
         productServicePort.deleteProduct(id);
+        return ResponseEntity.ok(id);
     }
 }

@@ -7,6 +7,8 @@ import it.marczuk.invoicemanager.infrastructure.application.rest.company.dto.Edi
 import it.marczuk.invoicemanager.infrastructure.application.rest.company.mapper.AddCompanyDtoMapper;
 import it.marczuk.invoicemanager.infrastructure.application.rest.company.mapper.EditCompanyDtoMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,27 +21,30 @@ public class CompanyController {
     private final CompanyServicePort companyServicePort;
 
     @GetMapping("/get_all")
-    public List<Company> getCompanies() {
-        return companyServicePort.getCompanies();
+    public ResponseEntity<List<Company>> getCompanies() {
+        return ResponseEntity.ok(companyServicePort.getCompanies());
     }
 
     @GetMapping("/get/{id}")
-    public Company getCompanyById(@PathVariable Long id) {
-        return companyServicePort.getCompanyById(id);
+    public ResponseEntity<Company> getCompanyById(@PathVariable Long id) {
+        return ResponseEntity.ok(companyServicePort.getCompanyById(id));
     }
 
     @PostMapping("/add")
-    public Company addCompany(@RequestBody AddCompanyDto addCompanyDto) {
-        return companyServicePort.addCompany(AddCompanyDtoMapper.mapToCompany(addCompanyDto));
+    public ResponseEntity<Company> addCompany(@RequestBody AddCompanyDto addCompanyDto) {
+        Company company = companyServicePort.addCompany(AddCompanyDtoMapper.mapToCompany(addCompanyDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(company);
     }
 
     @PutMapping("/update")
-    public Company editCompany(@RequestBody EditCompanyDto editCompanyDto) {
-        return companyServicePort.editCompany(EditCompanyDtoMapper.mapToCompany(editCompanyDto));
+    public ResponseEntity<Company> editCompany(@RequestBody EditCompanyDto editCompanyDto) {
+        Company company = companyServicePort.editCompany(EditCompanyDtoMapper.mapToCompany(editCompanyDto));
+        return ResponseEntity.ok(company);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteCompany(@PathVariable Long id) {
+    public ResponseEntity<Long> deleteCompany(@PathVariable Long id) {
         companyServicePort.deleteCompany(id);
+        return ResponseEntity.ok(id);
     }
 }

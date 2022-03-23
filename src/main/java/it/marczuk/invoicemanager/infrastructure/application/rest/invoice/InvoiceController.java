@@ -10,6 +10,8 @@ import it.marczuk.invoicemanager.infrastructure.application.rest.invoice.mapper.
 import it.marczuk.invoicemanager.infrastructure.application.rest.invoice.mapper.InvoiceMapper;
 import it.marczuk.invoicemanager.infrastructure.application.rest.product.mapper.AddProductDtoMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,29 +24,32 @@ public class InvoiceController {
     private final InvoiceServicePort invoiceServicePort;
 
     @GetMapping("/get_all")
-    public List<ReturnInvoiceDto> getInvoices() {
-        return invoiceServicePort.getInvoices();
+    public ResponseEntity<List<ReturnInvoiceDto>> getInvoices() {
+        return ResponseEntity.ok(invoiceServicePort.getInvoices());
     }
 
     @GetMapping("/get/{id}")
-    public ReturnInvoiceDto getInvoiceById(@PathVariable Long id) {
-        return invoiceServicePort.getInvoiceById(id);
+    public ResponseEntity<ReturnInvoiceDto> getInvoiceById(@PathVariable Long id) {
+        return ResponseEntity.ok(invoiceServicePort.getInvoiceById(id));
     }
 
     @PostMapping("/add")
-    public ReturnInvoiceDto addInvoice(@RequestBody AddInvoiceDto addInvoiceDto) {
+    public ResponseEntity<ReturnInvoiceDto> addInvoice(@RequestBody AddInvoiceDto addInvoiceDto) {
         Invoice invoice = InvoiceMapper.mapToInvoice(addInvoiceDto);
         List<Product> products = AddProductDtoMapper.mapToProduct(addInvoiceDto.getProducts());
-        return invoiceServicePort.addInvoice(invoice, products);
+        ReturnInvoiceDto returnInvoiceDto = invoiceServicePort.addInvoice(invoice, products);
+        return ResponseEntity.status(HttpStatus.CREATED).body(returnInvoiceDto);
     }
 
     @PutMapping("/update")
-    public ReturnInvoiceDto editInvoice(@RequestBody EditInvoiceDto editInvoiceDto) {
-        return invoiceServicePort.editInvoice(EditInvoiceDtoMapper.mapToInvoice(editInvoiceDto));
+    public ResponseEntity<ReturnInvoiceDto> editInvoice(@RequestBody EditInvoiceDto editInvoiceDto) {
+        ReturnInvoiceDto returnInvoiceDto = invoiceServicePort.editInvoice(EditInvoiceDtoMapper.mapToInvoice(editInvoiceDto));
+        return ResponseEntity.ok(returnInvoiceDto);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteInvoice(@PathVariable Long id) {
+    public ResponseEntity<Long> deleteInvoice(@PathVariable Long id) {
         invoiceServicePort.deleteInvoice(id);
+        return ResponseEntity.ok(id);
     }
 }
