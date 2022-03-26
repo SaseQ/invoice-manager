@@ -1,0 +1,140 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: saseq
+      changes:
+        - createTable:
+            tableName: addresses
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey:  true
+                    nullable:  false
+              - column:
+                  name: city
+                  type: varchar(255)
+              - column:
+                  name: country
+                  type: varchar(255)
+              - column:
+                  name: house_number
+                  type: varchar(5)
+              - column:
+                  name: street_name
+                  type: varchar(255)
+              - column:
+                  name: zip_code
+                  type: varchar(6)
+
+  - changeSet:
+      id: 2
+      author: saseq
+      changes:
+        - createTable:
+            tableName: companies
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: company_name
+                  type: varchar(255)
+              - column:
+                  name: company_owner_first_name
+                  type: varchar(255)
+              - column:
+                  name: company_owner_second_name
+                  type: varchar(255)
+              - column:
+                  name: tax_identification_number
+                  type: varchar(255)
+              - column:
+                  name: address_id
+                  type: int8
+
+  - changeSet:
+      id: 3
+      author: saseq
+      changes:
+        - createTable:
+            tableName: invoices
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: date_of_issue
+                  type: date
+              - column:
+                  name: date_performance_of_service
+                  type: date
+              - column:
+                  name: pay_type
+                  type: int4
+              - column:
+                  name: payment_deadline
+                  type: date
+              - column:
+                  name: place_of_issue
+                  type: varchar(255)
+              - column:
+                  name: sum_to_pay
+                  type: numeric(19, 2)
+              - column:
+                  name: sum_to_pay_as_words
+                  type: varchar(255)
+              - column:
+                  name: buyer_id
+                  type: int8
+              - column:
+                  name: seller_id
+                  type: int8
+
+  - changeSet:
+      id: 4
+      author: saseq
+      changes:
+        - createTable:
+            tableName: products
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: count
+                  type: int4
+              - column:
+                  name: country
+                  type: varchar(255)
+              - column:
+                  name: gross_value
+                  type: numeric(19, 2)
+              - column:
+                  name: name
+                  type: varchar(255)
+              - column:
+                  name: net_price
+                  type: numeric(19, 2)
+              - column:
+                  name: net_value
+                  type: numeric(19, 2)
+              - column:
+                  name: tax_sum
+                  type: numeric(19, 2)
+              - column:
+                  name: tax_value
+                  type: int4
+              - column:
+                  name: invoice_id
+                  type: int8
