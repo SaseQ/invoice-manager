@@ -161,3 +161,212 @@ databaseChangeLog:
               - column:
                   name: zip_code
                   value: 00-000
+
+  - changeSet:
+      id: 6
+      author: saseq
+      changes:
+        - insert:
+            tableName: addresses
+            columns:
+              - column:
+                  name: city
+                  value: testCity
+              - column:
+                  name: country
+                  value: PL
+              - column:
+                  name: house_number
+                  value: 11
+              - column:
+                  name: street_name
+                  value: testStreetName
+              - column:
+                  name: zip_code
+                  value: 00-000
+
+  - changeSet:
+      id: 7
+      author: saseq
+      changes:
+        - insert:
+            tableName: companies
+            columns:
+              - column:
+                  name: company_name
+                  value: testCompanyName
+              - column:
+                  name: company_owner_first_name
+                  value: testFirstName
+              - column:
+                  name: company_owner_second_name
+                  value: testSecondName
+              - column:
+                  name: tax_identification_number
+                  value: 1234567890
+              - column:
+                  name: address_id
+                  value: 1
+
+  - changeSet:
+      id: 8
+      author: saseq
+      changes:
+        - insert:
+            tableName: companies
+            columns:
+              - column:
+                  name: company_name
+                  value: testCompanyName
+              - column:
+                  name: company_owner_first_name
+                  value: testFirstName
+              - column:
+                  name: company_owner_second_name
+                  value: testSecondName
+              - column:
+                  name: tax_identification_number
+                  value: 1234567890
+              - column:
+                  name: address_id
+                  value: 2
+
+  - changeSet:
+      id: 9
+      author: saseq
+      changes:
+        - insert:
+            tableName: invoices
+            columns:
+              - column:
+                  name: date_of_issue
+                  value: 2003-03-03
+              - column:
+                  name: date_performance_of_service
+                  value: 2003-03-03
+              - column:
+                  name: pay_type
+                  value: 0
+              - column:
+                  name: payment_deadline
+                  value: 2003-03-03
+              - column:
+                  name: place_of_issue
+                  value: testPlaceOfIssue
+              - column:
+                  name: sum_to_pay
+                  value: 59.99
+              - column:
+                  name: sum_to_pay_as_words
+                  value: testSumToPayAsWords
+              - column:
+                  name: buyer_id
+                  value: 1
+              - column:
+                  name: seller_id
+                  value: 2
+
+  - changeSet:
+      id: 10
+      author: saseq
+      changes:
+        - insert:
+            tableName: invoices
+            columns:
+              - column:
+                  name: date_of_issue
+                  value: 2003-03-03
+              - column:
+                  name: date_performance_of_service
+                  value: 2003-03-03
+              - column:
+                  name: pay_type
+                  value: 0
+              - column:
+                  name: payment_deadline
+                  value: 2003-03-03
+              - column:
+                  name: place_of_issue
+                  value: testPlaceOfIssue
+              - column:
+                  name: sum_to_pay
+                  value: 59.99
+              - column:
+                  name: sum_to_pay_as_words
+                  value: testSumToPayAsWords
+              - column:
+                  name: buyer_id
+                  value: 2
+              - column:
+                  name: seller_id
+                  value: 1
+
+  - changeSet:
+      id: 11
+      author: saseq
+      changes:
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: count
+                  value: 1
+              - column:
+                  name: country
+                  value: PL
+              - column:
+                  name: gross_value
+                  value: 123.0
+              - column:
+                  name: name
+                  value: testName
+              - column:
+                  name: net_price
+                  value: 100.0
+              - column:
+                  name: net_value
+                  value: 100.0
+              - column:
+                  name: tax_sum
+                  value: 23.0
+              - column:
+                  name: tax_value
+                  value: 23
+              - column:
+                  name: invoice_id
+                  value: 1
+
+  - changeSet:
+      id: 12
+      author: saseq
+      changes:
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: count
+                  value: 1
+              - column:
+                  name: country
+                  value: PL
+              - column:
+                  name: gross_value
+                  value: 123.0
+              - column:
+                  name: name
+                  value: testName
+              - column:
+                  name: net_price
+                  value: 100.0
+              - column:
+                  name: net_value
+                  value: 100.0
+              - column:
+                  name: tax_sum
+                  value: 23.0
+              - column:
+                  name: tax_value
+                  value: 23
+              - column:
+                  name: invoice_id
+                  value: 2

@@ -72,7 +72,7 @@ class AddressDatabaseAdapterTest {
     }
 
     @Test
-    void shouldAddNewAddress() {
+    void shouldSaveNewAddress() {
         // given
         Address address = new Address(
                 null,
@@ -87,7 +87,7 @@ class AddressDatabaseAdapterTest {
         Address actual = addressDatabaseAdapter.save(address);
 
         //then
-        assertThat(actual.getId()).isEqualTo(2L);
+        assertThat(actual.getId()).isEqualTo(3L);
         assertThat(actual.getStreetName()).isEqualTo("testStreetName2");
         assertThat(actual.getHouseNumber()).isEqualTo("22");
         assertThat(actual.getZipCode()).isEqualTo("00-001");
@@ -98,7 +98,7 @@ class AddressDatabaseAdapterTest {
     @Test
     void shouldDeleteAddress() {
         // given
-        Optional<Address> addressOptional = addressDatabaseAdapter.findById(1L);
+        Optional<Address> addressOptional = addressDatabaseAdapter.findById(2L);
 
         if(addressOptional.isPresent()) {
             Address address = addressOptional.get();
@@ -108,7 +108,7 @@ class AddressDatabaseAdapterTest {
         }
 
         //then
-        Optional<Address> actual = addressDatabaseAdapter.findById(1L);
+        Optional<Address> actual = addressDatabaseAdapter.findById(2L);
         assertThat(actual).isEmpty();
     }
 
