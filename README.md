@@ -2,7 +2,7 @@
 ![version](https://img.shields.io/badge/version-1.0.0-green)
 ![demo](https://img.shields.io/badge/demo-online-success)
 
-> Live demo [_here_](https://marczuk.it/invoice-manager).<br>
+> Live demo [_here_](http://marczuk.it/invoice-manager).<br>
 > Frontend repo [_here_](https://github.com/SaseQ/invoice-manager-frontend).
 
 ## Table of Contents
