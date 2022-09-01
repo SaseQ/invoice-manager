@@ -1,6 +1,6 @@
 # Invoice Manager
 ![version](https://img.shields.io/badge/version-1.0.0-green)
-![demo](https://img.shields.io/badge/demo-online-success)
+![demo](https://img.shields.io/badge/demo-off-red)
 
 > Live demo [_here_](http://marczuk.it/invoice-manager).<br>
 > Frontend repo [_here_](https://github.com/SaseQ/invoice-manager-frontend).
