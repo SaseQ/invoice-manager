@@ -1,7 +1,5 @@
 package it.marczuk.invoicemanager.domain.invoice.service;
 
-import it.marczuk.invoicemanager.domain.address.model.Address;
-import it.marczuk.invoicemanager.domain.address.service.TestAddressData;
 import it.marczuk.invoicemanager.domain.company.model.Company;
 import it.marczuk.invoicemanager.domain.company.port.CompanyServicePort;
 import it.marczuk.invoicemanager.domain.company.service.TestCompanyData;
@@ -20,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -134,7 +133,7 @@ class InvoiceServiceTest {
         assertThat(actual.getProducts()).isEqualTo(ReturnProductDtoMapper.mapToReturnProductDto(productList));
         assertThat(actual.getPayType()).isEqualTo(PayType.BANK_TRANSFER);
         assertThat(actual.getPaymentDeadline()).isEqualTo(LocalDate.of(2021, 3, 8));
-        assertThat(actual.getSumToPay()).isEqualTo(BigDecimal.valueOf(12.3));
+        assertThat(actual.getSumToPay()).isEqualTo(BigDecimal.valueOf(12.3).setScale(2, RoundingMode.HALF_EVEN));
         assertThat(actual.getSumToPayAsWords()).isEqualTo("dwanaście PLN 30/100");
     }
 

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.allegro.finance.tradukisto.MoneyConverters;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,7 +114,7 @@ public class InvoiceService {
         for (Product product : products) {
             sumToPay = sumToPay.add(product.getGrossValue());
         }
-        return sumToPay;
+        return sumToPay.setScale(2, RoundingMode.HALF_EVEN);
     }
 
     private String convertSumToPayAsWords(BigDecimal sumToPay) {
